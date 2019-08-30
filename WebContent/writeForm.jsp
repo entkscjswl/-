@@ -22,7 +22,7 @@ try{
 	}
 %>
 	<p>글쓰기</p>
-	<form method="post" name="writeform" action="writePro.jsp" onsubmit="return writeSave()">
+	<form method="post" name="writeform" action="writePro.jsp" onsubmit="return writeSave()" enctype="multipart/form-data">
 		<input type="hidden" name="num" value="<%=num %>">				<!-- 26~29 value들의 값은 writePro로 넘겨 자바빈의 insertArticle()에서 제목글과 답변글의 구분을 처리 -->
 		<input type="hidden" name="ref" value="<%=ref %>">
 		<input type="hidden" name="re_step" value="<%=re_step %>">
@@ -64,6 +64,11 @@ try{
 			<td width="330" align="left">
 				<textarea name="content" rows="13" cols="40"
 				 style="ime-mode:active;"></textarea></td>
+		</tr>
+		<tr>
+			<th bgcolor="<%=value_c%>">파일추가</th>
+			<td align="left"><input type="file" name="filename">
+		  </td>
 		</tr>
 		<tr>
 			<td width="70" bgcolor="<%=value_c %>" align="center">비밀번호</td>

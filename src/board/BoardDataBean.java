@@ -12,6 +12,8 @@ public class BoardDataBean {
 	private String passwd;
 	private Timestamp reg_date;
 	private int readcount;
+	private String filename;
+	private long filesize;
 	private String ip;
 	private int ref;
 	private int re_step;
@@ -65,6 +67,18 @@ public class BoardDataBean {
 	}
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
+	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	public long getFilesize() {
+		return filesize;
+	}
+	public void setFilesize(long filesize) {
+		this.filesize = filesize;
 	}
 	public String getIp() {
 		return ip;

@@ -4,9 +4,17 @@
 /* 데이터베이스 테이블과 연동하여 작업하는 DB 처리빈 */
 package board;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.*;
 import java.util.*;
 import javax.naming.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import javax.sql.DataSource;
 
 public class BoardDBBean {
@@ -69,7 +77,8 @@ public class BoardDBBean {
 				}
 				//쿼리를 작성
 				sql = "insert into bboard (num,writer,email,subject,passwd,reg_date, "				//71~86 insert문을 사용하여 bboard테이블에 새로운 레코드를 추가하는 부분
-						+ " ref, re_step,re_level,content,ip) values(?,?,?,?,?,?,?,?,?,?,?)";		//	*에러 수정*num은 나중에 추가함
+						+ " ref, re_step,re_level,content,filename,filesize,ip) "
+						+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?)";		//	*에러 수정*num은 나중에 추가함
 				
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, number);
@@ -82,7 +91,9 @@ public class BoardDBBean {
 				pstmt.setInt(8, re_step);
 				pstmt.setInt(9, re_level);
 				pstmt.setString(10, article.getContent());
-				pstmt.setString(11, article.getIp());
+				pstmt.setString(11,article.getFilename());
+				pstmt.setLong(12,article.getFilesize());
+				pstmt.setString(13, article.getIp());
 				
 				pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -141,7 +152,7 @@ public class BoardDBBean {
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
 			rs=pstmt.executeQuery();
-			if(rs.next()) {													//	145~164 ArrayList에 board테이블에서 가져온 레코드를 하나씩 BoardDataBean 객체로 생성해-
+			if(rs.next()) {													//	154~173 ArrayList에 board테이블에서 가져온 레코드를 하나씩 BoardDataBean 객체로 생성해-
 				articleList = new ArrayList<BoardDataBean>(end);			//-ArrayList에 넣는다
 				do {
 					BoardDataBean article = new BoardDataBean();
@@ -182,7 +193,7 @@ public class BoardDBBean {
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
 			
-			pstmt = conn.prepareStatement(								//185~188 num에 해당하는 레코드를 검색해오는 부분
+			pstmt = conn.prepareStatement(								//195~197 num에 해당하는 레코드를 검색해오는 부분
 					"select * from bboard where num = ?");
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -200,6 +211,8 @@ public class BoardDBBean {
 				article.setRe_step(rs.getInt("re_step"));
 				article.setRe_level(rs.getInt("re_level"));
 				article.setContent(rs.getString("content"));
+				article.setFilename(rs.getString("filename"));
+				article.setFilesize(rs.getLong("filesize"));
 				article.setIp(rs.getString("ip"));	
 			}
 		}catch(Exception e) {
@@ -336,6 +349,68 @@ public class BoardDBBean {
 		return x;
 	}
 	
+	public static String replace(String str, String pattern, String replace) {
+		int s = 0, e = 0;
+		StringBuffer result = new StringBuffer();
+
+		while ((e = str.indexOf(pattern, s)) >= 0) {
+			result.append(str.substring(s, e));
+			result.append(replace);
+			s = e + pattern.length();
+		}
+		result.append(str.substring(s));
+		return result.toString();
+	}
+	public static void delete(String s) {
+		File file = new File(s);
+		if (file.isFile()) {
+			file.delete();
+		}
+	}
+	public static String con(String s) {
+		String str = null;
+		try {
+			str = new String(s.getBytes("8859_1"), "ksc5601");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return str;
+	}
+	//파일 다운로드
+	public void downLoad(HttpServletRequest req, HttpServletResponse res,
+			JspWriter out, PageContext pageContext) {
+	  String  SAVEFOLDER = "C:\\z_DooSanJAVA\\works\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\20190813_1\\FileUpload";
+	  try {
+	    String filename = req.getParameter("filename");
+	    File file = new File(con(SAVEFOLDER + File.separator+ filename));
+	    byte b[] = new byte[(int) file.length()];
+	    res.setHeader("Accept-Ranges", "bytes");
+	    String strClient = req.getHeader("User-Agent");
+	    if (strClient.indexOf("MSIE6.0") != -1) {
+	      res.setContentType("application/smnet;charset=euc-kr");
+	      res.setHeader("Content-Disposition", "filename=" + filename + ";");
+	    } else {
+	      res.setContentType("application/smnet;charset=euc-kr");
+	      res.setHeader("Content-Disposition", "attachment;filename="+ filename + ";");
+	    }
+	    out.clear();
+	    out = pageContext.pushBody();
+	    if (file.isFile()) {
+	      BufferedInputStream fin = new BufferedInputStream(
+	          new FileInputStream(file));
+	      BufferedOutputStream outs = new BufferedOutputStream(
+	          res.getOutputStream());
+	      int read = 0;
+	      while ((read = fin.read(b)) != -1) {
+	        outs.write(b, 0, read);
+	      }
+	      outs.close();
+	      fin.close();
+	    }
+	  } catch (Exception e) {
+	    e.printStackTrace();
+	  }
+	}
 }
 
 

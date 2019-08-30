@@ -9,8 +9,18 @@
 <head>
 <title>게시판</title>
 <link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+  function down(filename){
+     document.downForm.filename.value=filename;
+     document.downForm.submit();
+  }
+</script>
 </head>
 <body bgcolor="<%=bodyback_c%>">
+
+<form name=downForm action="download.jsp" method="post">
+	<input type="hidden" name="filename">
+</form>
 <%
 	int num = Integer.parseInt(request.getParameter("num"));
 	String pageNum = request.getParameter("pageNum");
@@ -22,9 +32,11 @@
 		BoardDBBean dbPro = BoardDBBean.getInstance();
 		BoardDataBean article = dbPro.getArticle(num);
 		
-		int ref = article.getRef();							//25~27 article 레퍼런스를 사용해서 re,re_step,re_level 값을 얻어옴. 이는 답변글 작성시 이들 값을  답변글의 부모글로-
+		int ref = article.getRef();							//35~37 article 레퍼런스를 사용해서 re,re_step,re_level 값을 얻어옴. 이는 답변글 작성시 이들 값을  답변글의 부모글로-
 		int re_step = article.getRe_step();					//-정보를 넘겨주기 위해서임
 		int re_level = article.getRe_level();
+		String filename = article.getFilename();
+		long filesize = article.getFilesize();
 	%>
 	
 	<p>글내용 보기</p>
@@ -57,7 +69,15 @@
 			<td align="left" width="375" colspan="3" style="word-break:break-all;">
 				<pre><%=article.getContent() %></pre></td>
 		</tr>
-		<tr height="30">															<!-- 60~74 글수정,삭제, 등 누르는 버튼들 -->
+		<tr>
+		  <td align="center" bgcolor="<%=value_c%>">첨부파일</td>
+		  <td align="left" colspan="3" >
+		  <% if(filename==null || filename.equals("")) { %>등록된 파일이 없습니다. 
+			<% } else { %><a href="javascript:down('<%=filename%>')"><%=filename %></a>&nbsp;&nbsp;&nbsp;(<%=filesize %>bytes)
+			<% } %>
+		  </td>
+		</tr>
+		<tr height="30">															<!-- 68~82 글수정,삭제, 등 누르는 버튼들 -->
 			<td colspan="4" bgcolor="<%=value_c %>" align="right">
 				<input type="button" value="글수정"
 				onclick="document.location.href='updateForm.jsp?num=<%=article.getNum() %>&pageNum=<%=pageNum%>'">

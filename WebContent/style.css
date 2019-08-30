@@ -1,0 +1,34 @@
+@charset "UTF-8";
+
+body{
+	font-size:9pt;
+	text-align:center;
+}
+table{
+	font-size:9pt;
+	text-align:center;
+	border: 1pt solid black;
+	table-layout:fixed;
+}
+select{
+	font-size:9pt;
+}
+form{
+	font-size:9pt;
+}
+p{
+	font-weight:700;
+}
+td{
+	word-break: break-all;
+}
+
+
+
+
+
+
+
+
+
+

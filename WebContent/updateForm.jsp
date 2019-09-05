@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>게시판</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="style.css?ver=1" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="script.js"></script>
 </head>
 <body bgcolor="<%=bodyback_c %>">
@@ -25,32 +25,32 @@
 	<form method="post" name="writeform" action="updatePro.jsp?pageNum=<%=pageNum %>" onsubmit="return writeSave()">
 	<table>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">이름</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">이름</th>
 			<td align = "left" width="330">
 				<input type="text" size="10" maxlength="10" name="writer"
 				value="<%=article.getWriter() %>" style="ime-mode:active;">
 				<input type="hidden" name="num" value="<%=article.getNum() %>"></td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">제목</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">제목</th>
 			<td align="left" width="330">
 				<input type="text" size="40" maxlength="50" name="subject"
 				value="<%=article.getSubject() %>" style="ime-mode:active;"></td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">Email</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">Email</th>
 			<td align="left" width="330">
 				<input type="text" size="40" maxlength="30" name="email"
 				value="<%=article.getEmail() %>" style="ime-mode:inactive;"></td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">내용</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">내용</th>
 			<td align="left" width="330">
 				<textarea name="content" rows="13" cols="40"
 				style="ime-mode:active;"><%=article.getContent()%></textarea></td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">비밀번호</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">비밀번호</th>
 			<td align="left" width="330">
 				<input type="password" size="8" maxlength="12" name="passwd" 
 				style="ime-mode:inactive;">

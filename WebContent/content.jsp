@@ -8,7 +8,7 @@
 <html>
 <head>
 <title>게시판</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="style.css?ver=1" rel="stylesheet" type="text/css">
 <script type="text/javascript">
   function down(filename){
      document.downForm.filename.value=filename;
@@ -44,33 +44,33 @@
 <form>
 	<table>
 		<tr height="30">																<!-- 34~59 num에 해당하는 글을 화면에 표시 -->
-			<td align="center" width="125" bgcolor="<%=value_c %>">글번호</td>
+			<th align="center" width="125" bgcolor="<%=value_c %>">글번호</th>
 			<td align="center" width="125" align="center">
 				<%=article.getNum() %></td>
-			<td align="center" width="125" bgcolor="<%=value_c %>">조회수</td>
+			<th align="center" width="125" bgcolor="<%=value_c %>">조회수</th>
 			<td align="center" width="125" align="center">
 				<%=article.getReadcount() %></td>
 		</tr>
 		<tr height="30">
-			<td align="center" width="125" bgcolor="<%=value_c %>">작성자</td>
+			<th align="center" width="125" bgcolor="<%=value_c %>">작성자</th>
 			<td align="center" width="125" align="center">
 				<%=article.getWriter() %></td>
-			<td align="center" width="125" bgcolor="<%=value_c %>">작성일</td>
+			<th align="center" width="125" bgcolor="<%=value_c %>">작성일</th>
 			<td align="center" width="125" align="center">
 				<%=sdf.format(article.getReg_date()) %></td>
 		</tr>
 		<tr height="30">
-			<td align="center" width="125" bgcolor="<%=value_c %>">글제목</td>
+			<th align="center" width="125" bgcolor="<%=value_c %>">글제목</th>
 			<td align="center" width="375" align="center" colspan="3">
 				<%=article.getSubject() %></td>
 		</tr>
-		<tr height="auto">
-			<td align="center" width="125" bgcolor="<%=value_c %>">글내용</td>
+		<tr height="30,auto">
+			<th align="center" width="125" bgcolor="<%=value_c %>">글내용</th>
 			<td align="left" width="375" colspan="3" style="word-break:break-all;">
-				<pre><%=article.getContent() %></pre></td>
+				<pre style="word-wrap: break-word;white-space: pre-wrap;white-space: -moz-pre-wrap;white-space: -pre-wrap;white-space: -o-pre-wrap;word-break:break-all;"><%=article.getContent() %></pre></td>
 		</tr>
-		<tr>
-		  <td align="center" bgcolor="<%=value_c%>">첨부파일</td>
+		<tr height="30">
+		  <th align="center" bgcolor="<%=value_c%>">첨부파일</th>
 		  <td align="left" colspan="3" >
 		  <% if(filename==null || filename.equals("")) { %>등록된 파일이 없습니다. 
 			<% } else { %><a href="javascript:down('<%=filename%>')"><%=filename %></a>&nbsp;&nbsp;&nbsp;(<%=filesize %>bytes)

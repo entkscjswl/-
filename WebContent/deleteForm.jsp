@@ -11,7 +11,7 @@
 <html>
 <head>
 <title>게시판</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="style.css?ver=1" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="script.js">
 <!-- 
 	function deleteSave(){
@@ -30,7 +30,7 @@
 	<form method="post" name="delForm" action="deletePro.jsp?pageNum=<%=pageNum %>"
 	onsubmit="return deleteSave()">
 	
-	<table>
+	<table width="300">
 		<tr height="30">
 			<td align="center" bgcolor="<%=value_c %>">
 				<b>비밀번호를 입력해주세요</b></td>

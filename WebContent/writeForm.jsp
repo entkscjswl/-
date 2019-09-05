@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>게시판</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="style.css?ver=1" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="script.js"></script>
 </head>
 
@@ -36,13 +36,13 @@ try{
 			</td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">이름</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">이름</th>
 			<td width="330" align="left">
 				<input type="text" size="10" maxlength="10"
 				 name="writer" style="ime-mode:active;"></td>		<!--style 부분은 해당 입력란에 포커스가 들어오면 자동으로 한글로 입력되게 하는 역할-->
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">제목</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">제목</th>
 			<td width="330" align="left">
 			<%
 			if(request.getParameter("num")==null)				//제목글이면 48~49 실행
@@ -54,13 +54,13 @@ try{
 			 value="<%=strV %>" style="ime-mode:active;"></td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">Email</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">Email</th>
 			<td width="330" align="left">
 				<input type="text" size="40" maxlength="30" name="email"
 				 style="ime-mode:inactive;"></td>		
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">내용</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">내용</th>
 			<td width="330" align="left">
 				<textarea name="content" rows="13" cols="40"
 				 style="ime-mode:active;"></textarea></td>
@@ -71,7 +71,7 @@ try{
 		  </td>
 		</tr>
 		<tr>
-			<td width="70" bgcolor="<%=value_c %>" align="center">비밀번호</td>
+			<th width="70" bgcolor="<%=value_c %>" align="center">비밀번호</th>
 			<td width="330" align="left">
 				<input type="password" size="8" maxlength="12"
 				 name="passwd" style="ime-mode:inactive;"></td>	

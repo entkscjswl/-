@@ -21,12 +21,12 @@ FileRenamePolicy policy = new DefaultFileRenamePolicy();
 String fileName = "filename";
 
 MultipartRequest multi = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);      
-File file = multi.getFile(fileName);  // client의 파일경로+이름 즉 c:\직박구리\abc.jpg
+File file = multi.getFile(fileName);  
 if(file == null){
 	  out.println("파일 추가 없음");
 } else {
-		fileName = file.getName();  // server 파일경로+이름 즉 /FileUpload/abc.jpg
-		long fileSize = file.length();  // server들어가 있는 파일의 사이즈
+		fileName = file.getName();  
+		long fileSize = file.length();  
 		if(fileName == null){
 		  out.println("파일 업로드 실패");
 		}else{
@@ -41,6 +41,10 @@ if(file == null){
 	article.setContent(multi.getParameter("content"));
 	article.setSubject(multi.getParameter("subject"));
 	article.setPasswd(multi.getParameter("passwd"));
+	article.setNum(Integer.parseInt(multi.getParameter("num")));
+	article.setRef(Integer.parseInt(multi.getParameter("ref")));
+	article.setRe_step(Integer.parseInt(multi.getParameter("re_step")));
+	article.setRe_level(Integer.parseInt(multi.getParameter("re_level")));
 	article.setReg_date(new Timestamp(System.currentTimeMillis()));
 	article.setIp(request.getRemoteAddr());
 	

@@ -28,7 +28,6 @@
 	
 	BoardDBBean dbPro = BoardDBBean.getInstance();
 	count = dbPro.getArticleCount();					//전체 레코드 수가 리턴되어 count변수에 저장
-	
 	if(count>0){
 		articleList = dbPro.getArticles(startRow, pageSize);
 	}
@@ -37,19 +36,11 @@
 %>
 <html>
 <head>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="style.css?ver=1" rel="stylesheet" type="text/css">
 <title>게시판</title>
 </head>
 <body bgcolor="<%=bodyback_c%>">
 	<p>글목록(전체 글:<%=count %>)</p>
-	
-	<table>
-		<tr>
-			<td align="right" bgcolor="<%=value_c %>">
-				<a href="writeForm.jsp">글쓰기</a>
-			</td>
-		</tr>
-	</table>
 	
 	<% if(count==0){ %>
 	
@@ -62,13 +53,18 @@
 	
 	<%}else{ %>
 	<table>
+		<tr height="25">
+			<td colspan="6" align="right" bgcolor="<%=value_c %>">
+				<a href="writeForm.jsp">글쓰기</a>
+			</td>
+		</tr>
 		<tr height="30" bgcolor="<%=value_c %>">
-			<td align = "center" width="50">번호</td>
-			<td align = "center" width="250">제목</td>
-			<td align = "center" width="100">작성자</td>
-			<td align = "center" width="150">작성일</td>
-			<td align = "center" width="50">조회</td>
-			<td align = "center" width="100">IP</td>
+			<th align = "center" width="50">번호</th>
+			<th align = "center" width="250">제목</th>
+			<th align = "center" width="100">작성자</th>
+			<th align = "center" width="150">작성일</th>
+			<th align = "center" width="50">조회</th>
+			<th align = "center" width="100">IP</th>
 		</tr>
 	<%
 	if(articleList!=null){
@@ -83,8 +79,8 @@
 	if(article.getRe_level()>0){
 	   wid=5*(article.getRe_level());
 %>
-	  <img src="images/level.png" width="<%=wid%>" height="16">
-	  <img src="images/re.png">
+	  <img src="" width="<%=wid%>" height="16">
+	  <img src="images/re.png?ver=2">
 <%  }else{%>
 	  <img src="images/level.png" width="<%=wid%>" height="16">
 <%  }%>

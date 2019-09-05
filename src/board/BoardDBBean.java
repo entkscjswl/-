@@ -61,7 +61,7 @@ public class BoardDBBean {
 				else
 					number = 1;
 				
-				if(num!=0) {										//56~69 제목글과 답변글의 순서를 결정하는 작업
+				if(num!=0) {										//64~77 제목글과 답변글의 순서를 결정하는 작업
 					sql = "update bboard set re_step=re_step+1 "
 							+ " where ref=? and re_step>?";
 					pstmt = conn.prepareStatement(sql);
@@ -150,9 +150,9 @@ public class BoardDBBean {
 					+ " where rnum>=? and rnum<=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(2, end+start-1);
 			rs=pstmt.executeQuery();
-			if(rs.next()) {													//	154~173 ArrayList에 board테이블에서 가져온 레코드를 하나씩 BoardDataBean 객체로 생성해-
+			if(rs.next()) {													//	155~173 ArrayList에 board테이블에서 가져온 레코드를 하나씩 BoardDataBean 객체로 생성해-
 				articleList = new ArrayList<BoardDataBean>(end);			//-ArrayList에 넣는다
 				do {
 					BoardDataBean article = new BoardDataBean();
@@ -192,7 +192,7 @@ public class BoardDBBean {
 			pstmt = conn.prepareStatement("update bboard set readcount = readcount +1 where num = ?");	//181~183 글의 조회수를 1 증가시켜주는 부분
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
-			
+				
 			pstmt = conn.prepareStatement(								//195~197 num에 해당하는 레코드를 검색해오는 부분
 					"select * from bboard where num = ?");
 			pstmt.setInt(1, num);
@@ -361,12 +361,14 @@ public class BoardDBBean {
 		result.append(str.substring(s));
 		return result.toString();
 	}
+	
 	public static void delete(String s) {
 		File file = new File(s);
 		if (file.isFile()) {
 			file.delete();
 		}
 	}
+	
 	public static String con(String s) {
 		String str = null;
 		try {

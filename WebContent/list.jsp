@@ -40,7 +40,7 @@
 <title>게시판</title>
 </head>
 <body bgcolor="<%=bodyback_c%>">
-	<p>글목록(전체 글:<%=count %>)</p>
+	<p>dd글목록(전체 글:<%=count %>)</p>
 	
 	<% if(count==0){ %>
 	
